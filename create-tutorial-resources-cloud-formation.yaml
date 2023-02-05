@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: AWS CloudFormation which creates the resources for the Apache Spark Athena 
+### 
+# Parameters for the cloudformation template
+Parameters:
+  S3PySparkBucketName:
+    Type: String
+    Description: Bucket name for the aws tutorial
+Resources:
+  S3BucketForData:
+    Type: AWS::S3::Bucket
+    Properties: 
+      BucketName: !Ref S3PySparkBucketName
+      Tags:
+      - Key: identifier
+        Value: pySparktutorial
+  ###
+  # Database created for the tables to reside in
+  GlueDatabase:
+    Type: AWS::Glue::Database
+    Properties: 
+      CatalogId: !Ref AWS::AccountId
+      DatabaseInput: 
+        Name: athena_spark_tutorial_db
+        Description: "This database contains the tables for the PySpark tutorial"
+  ###
+  # Create the customer table which depends on the GlueDatabase and S3 bucket
+  GlueCustomerTable:
+    DependsOn: 
+    - GlueDatabase
+    - S3BucketForData
+    Type: AWS::Glue::Table
+    Properties: 
+      CatalogId: !Ref AWS::AccountId
+      DatabaseName: athena_spark_tutorial_db
+      TableInput: 
+        Name: customers
+        Description: Table for customer data
+        TableType: EXTERNAL_TABLE
+        StorageDescriptor:
+          Columns:
+          - Name: customerid
+            Type: bigint
+          - Name: firstname
+            Type: string
+          - Name: lastname
+            Type: string
+          - Name: fullname
+            Type: string
+          Location: !Sub s3://${S3PySparkBucketName}/customers
+          InputFormat: org.apache.hadoop.mapred.TextInputFormat
+          OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+          SerdeInfo:
+            Parameters: 
+              field.delim: ","  
+            SerializationLibrary: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+  
