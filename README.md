@@ -36,31 +36,36 @@ Below is the schema for the customer table which is created in the Glue Data Cat
 
 
 ## Main Tutorial
-1. Read data from Customers Table using Notebook Using Dyanmic Frame 
+1. Show all database 
+    ```
+    # Show Databases
+    spark.sql("show databases").show()
+    ```
+
+
+
+2. Read data from Customers Table  
     ``` 
-    # Read from the customers table in the glue data catalog using a dynamic frame
-    dynamicFrameCustomers = glueContext.create_dynamic_frame.from_catalog(
-    database = "athena_spark_tutorial_db", 
-    table_name = "customers"
-    )
-
-    # Show the top 10 rows from the dyanmic dataframe
-    dynamicFrameCustomers.show(10)
+    # Read from the customers table in the glue data catalog 
+    sqlDF = spark.sql("SELECT * From athena_spark_tutorial_db.customers")
+    
+    #Show top 50 rows
+    sqlDF.show(50)
     ```
 
-2. Check data types in Dynamic Frame 
+2. Print the schema
     ```
-    # Check types in dynamic frame
-    dynamicFrameCustomers.printSchema()
+    # Check types in frame
+    sqlDF.printSchema()
     ```
 
-3.  Select Fields From A Dynamic frame
+3.  Select Fields From A  frame
     ```
-    # Selecting certain fields from a Dyanmic DataFrame
-    dyfCustomerSelectFields = dynamicFrameCustomers.select_fields(["customerid", "fullname"])
-
-    # Show top 10
-    dyfCustomerSelectFields.show(10)
+    # Selecting certain fields from a  DataFrame
+    sqlDF = spark.sql("SELECT Firstname From athena_spark_tutorial_db.customers")
+    
+    #Show top 50 rows
+    sqlDF.show(50)
     ```
 
 
