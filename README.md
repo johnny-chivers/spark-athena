@@ -1,4 +1,4 @@
-# Run Apache Spark On Amaon Athena 
+# Run Apache Spark On Amazon Athena 
 
 ## Table of contents
 
@@ -10,7 +10,7 @@
 
 ## What's included
 
-The repo is to supplement the [youtube video](https://youtu.be/grfSNj2EMwo) on running Apache Spark Workloads on Athena AWS. 
+The repo is to supplement the [youtube video](https://youtu.be/yb7dAQl1Di8) on running Apache Spark Workloads on Athena AWS. 
 
 You will need an AWS User that has permissions to access Athena, S3, and the Glue Data Catalog. I am using my Admin account to carry out the tutorial. 
 
@@ -77,7 +77,7 @@ Below is the schema for the customer table which is created in the Glue Data Cat
 
 ## Useful Links
 
-- [youtube video](https://youtu.be/grfSNj2EMwo) 
+- [youtube video](https://youtu.be/yb7dAQl1Di8) 
 - [website](https://www.johnnychivers.co.uk)
 - [buy me a coffee](https://www.buymeacoffee.com/johnnychivers)
 
